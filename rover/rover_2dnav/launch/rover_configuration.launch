@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+	
+	<arg name="enable_cmd" default="true"/>
+	<arg name="use_t265" default="true"/>
+	
+	<include file="$(find rover_gmapping)/launch/urg_lidar.launch"/>
+	<include file="$(find rover_gmapping)/launch/rover_gmapping_launch.launch">
+		<arg name="use_t265" value="$(arg use_t265)"/>
+	</include>
+	
+	<node pkg="arduino_driver" type="sub_node.py" name="base_controller_node" output="screen" launch-prefix="bash -c 'sleep 5; $0 $@'">
+		<param name="cmd_enbl" type="bool" value="$(arg enable_cmd)"/>
+	</node>
+</launch> 

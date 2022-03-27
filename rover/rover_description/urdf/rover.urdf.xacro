@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<robot name="Rover">
+  <link name="base_link"/>
+  
+  <link name="chassis">
+    <visual>
+      <geometry>
+	      <mesh filename="package://rover_description/meshes/RoverChassisHD.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="body_color">
+			<color rgba="0.7 0.7 0.7 1"/> 
+      </material>
+    </visual>
+  </link>
+  
+  <joint name="chassis to base-link" type="fixed">
+	<origin xyz="0 0 0" rpy="0 0 3.1415926535897931"/>
+	<parent link = "base_link"/>
+	<child link="chassis"/>
+  </joint>
+  
+<!-- T265 Camera --> 
+  <link name="T265">
+	<visual>
+		<geometry>
+			<mesh filename="package://rover_description/meshes/T265_wMount.stl" scale="0.001 0.001 0.001"/>
+		</geometry>
+		<material name="T265_color">
+			<color rgba="0.5 0.5 0 1"/> 
+		</material>
+	</visual>
+  </link>
+  
+<!-- T265 Camera to Robot Body -->  
+  <joint name="T265_mount_link" type="fixed">
+	<origin xyz="-0.315693 -0.008 0.277615" rpy="0 0 3.1415926535897931"/>
+	<parent link="chassis"/>
+	<child link="T265"/>
+  </joint>
+  
+<!-- D435 Camera -->  
+  <link name="D435">
+	<visual>
+		<geometry>
+			<mesh filename="package://rover_description/meshes/D435.stl" scale="0.001 0.001 0.001"/>
+		</geometry>
+		<material name="D435_color">
+			<color rgba="0 0.7 0.7 1"/> 
+		</material>
+	</visual>
+  </link>
+  
+<!-- camera_link to D435 Camera
+  <joint name="D435_link" type="fixed">
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+	<parent link="D435"/>
+	<child link="camera_link"/>
+  </joint> -->
+  
+ <!-- camera_link to T265 Camera
+  <joint name="T265_link" type="fixed">
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+	<parent link="T265"/>
+	<child link="camera_link"/>
+  </joint> -->
+  
+<!-- D435 Camera to Camera Mount -->
+  <joint name="D435_link" type="fixed">
+	<origin xyz="0 0 0.025" rpy="1.57079632679 0 1.57079632679"/>
+	<parent link="T265"/>
+	<child link="D435"/>
+  </joint>
+  
+<!-- Hokuyo Lidar  -->  
+  <link name="Hokuyo">
+	<visual>
+		<origin xyz="0.008 0 -0.003" rpy="1.57079632679 0 0"/>
+		<geometry>
+			<mesh filename="package://rover_description/meshes/HokuyoLIDAR.stl" scale="0.001 0.001 0.001"/>
+		</geometry>
+		<material name="Hokuyo_color">
+			<color rgba="0.3 0 0.9 1"/> 
+		</material>
+	</visual>
+  </link>
+  
+<!-- D435 Camera to Camera Mount -->
+  <joint name="Hokuyo_link" type="fixed">
+	<origin xyz="-0.058 -0.008 0.02" rpy="0 0 0"/>
+	<parent link="T265"/>
+	<child link="Hokuyo"/>
+  </joint>
+
+</robot>
